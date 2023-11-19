@@ -10,13 +10,13 @@ COPY cmd/ cmd/
 COPY wasm/ wasm/
 
 RUN make prepare
-RUN make wasm-build
+RUN make wasm-js-build
 RUN make build
 
 FROM gcr.io/distroless/static:nonroot
 WORKDIR /
 COPY --from=builder /app/bin/golang-wasm .
-COPY --from=builder /app/main.wasm .
+COPY --from=builder /app/main-js.wasm .
 COPY --from=builder /app/index.html .
 COPY --from=builder /app/wasm_exec.js .
 
