@@ -12,8 +12,9 @@ build:
 
 .PHONY: prepare
 prepare:
-	cp "$(shell go env GOROOT)/misc/wasm/wasm_exec.js" ./static
-	cp "$(shell go env GOROOT)/misc/wasm/wasm_exec.html" ./static/index.html
+	cp "$(shell go env GOROOT)/misc/wasm/wasm_exec.js" ./
+	cp "$(shell go env GOROOT)/misc/wasm/wasm_exec.html" ./index.html
+	sed -i 's/test.wasm/main.wasm/' index.html
 
 .PHONY: image-build
 image-build:

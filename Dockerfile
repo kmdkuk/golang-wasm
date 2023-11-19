@@ -9,6 +9,7 @@ COPY Makefile Makefile
 COPY cmd/ cmd/
 COPY wasm/ wasm/
 
+RUN make prepare
 RUN make wasm-build
 RUN make build
 
@@ -16,8 +17,8 @@ FROM gcr.io/distroless/static:nonroot
 WORKDIR /
 COPY --from=builder /app/bin/golang-wasm .
 COPY --from=builder /app/main.wasm .
-COPY index.html .
-COPY wasm_exec.js .
+COPY --from=builder /app/index.html .
+COPY --from=builder /app/wasm_exec.js .
 
 EXPOSE 8080
 CMD ["/golang-wasm"]
